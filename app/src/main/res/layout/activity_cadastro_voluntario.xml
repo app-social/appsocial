@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9FC"
+    tools:context=".CadastroVoluntarioActivity">
+
+
+    <Button
+        android:id="@+id/idBtnSalvarEditarVoluntario"
+
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+
+        android:layout_marginStart="59dp"
+        android:layout_marginLeft="59dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="SALVAR"
+        android:textColor="#FFFFFF"
+        android:textSize="21sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/idBtnCancelarEditarVoluntario"
+        app:layout_constraintEnd_toStartOf="@+id/idBtnCancelarEditarVoluntario"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/idBtnCancelarEditarVoluntario"
+
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+
+        android:layout_marginEnd="58dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/buttonshape3"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="0"
+        android:text="CANCELAR"
+        android:textColor="#EFCFFF"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/idBtnSalvarEditarVoluntario" />
+
+    <EditText
+        android:id="@+id/idEmailEditarVoluntari"
+        android:layout_width="270dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#00A36464"
+        android:ems="10"
+        android:hint="Digite o email..."
+        android:inputType="textEmailAddress"
+        android:shadowColor="#000F0F0F"
+        android:textColor="#050505"
+        android:textColorHighlight="#00130F0F"
+        android:textColorHint="#887979"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/idSenha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/idSenha"
+        android:layout_width="270dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="312dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Digite a senha..."
+        android:inputType="textPassword"
+        android:shadowColor="#000F0F0F"
+        android:textColor="#050505"
+        android:textColorHighlight="#00130F0F"
+        android:textColorHint="#887979"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="386dp"
+        android:layout_height="87dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/social"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/idNomeEditarVoluntario"
+        android:layout_width="270dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Digite o nome..."
+        android:inputType="textPersonName"
+        android:shadowColor="#000F0F0F"
+        android:textColor="#050505"
+        android:textColorHighlight="#00130F0F"
+        android:textColorHint="#887979"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/idEmailEditarVoluntari"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="118dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/acaosocial"
+        app:layout_constraintBottom_toTopOf="@+id/idNomeEditarVoluntario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>
+
