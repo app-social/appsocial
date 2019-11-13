@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,9 @@ public class ListarProjetoActivity extends Activity implements RecycleViewOnClic
         bancoDados = openOrCreateDatabase("cadastroVoluntariosProjetos", MODE_PRIVATE, null);
         bancoDados.execSQL("CREATE TABLE IF NOT EXISTS voluntarios(_idVoluntario INTEGER PRIMARY KEY AUTOINCREMENT,nome VARCHAR NOT NULL, email VARCHAR NOT NULL, senha VARCHAR NOT NULL)");
         String  sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, url VARCHAR, voluntario_id INTERGER)";
+
+       // String sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+               // "nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, imagename BLOB NOT NULL, voluntario_id INTERGER)";
         bancoDados.execSQL(sql);
         cadastrarVoluntario = findViewById((R.id.idCadastrarVoluntario));
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -49,6 +53,8 @@ public class ListarProjetoActivity extends Activity implements RecycleViewOnClic
             }
         });
 
+
+        bancoDados.close();
     }
 
 

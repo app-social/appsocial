@@ -1,14 +1,18 @@
 package com.example.appsocialparcial;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class EditarVoluntarioActivity extends AppCompatActivity {
 
@@ -65,20 +69,66 @@ public class EditarVoluntarioActivity extends AppCompatActivity {
                 //String sqlUpdate = "UPDATE voluntarios SET nome = "+ editarNome.getText().toString() + " WHERE _idVoluntario = "+ idVoluntarioInt;
                 //bancoDados.execSQL(sqlUpdate);
 
-                ContentValues values = new ContentValues();
-                values.put("nome", editarNome.getText().toString());
-                values.put("email", editarEmail.getText().toString());
-                values.put("senha", editarSenha.getText().toString());
-                String[] args = {idVoluntarioInt.toString()};
-                bancoDados.update("voluntarios", values, "_idVoluntario=?", args);
+                boolean isOk = validarCampos();
+
+                if(!isOk){
+                    ContentValues values = new ContentValues();
+                    values.put("nome", editarNome.getText().toString());
+                    values.put("email", editarEmail.getText().toString());
+                    values.put("senha", editarSenha.getText().toString());
+                    String[] args = {idVoluntarioInt.toString()};
+                    bancoDados.update("voluntarios", values, "_idVoluntario=?", args);
+                    bancoDados.close();
+                    finish();
+                }
 
                // Intent intent = new Intent(getApplicationContext(), SelecaoActivity.class);
 
                // startActivity(intent);
-                finish();
+
             }
         });
 
 
+    }
+
+    private boolean validarCampos(){
+
+
+        boolean res = false;
+        String nome = editarNome.getText().toString();
+        String email = editarEmail.getText().toString();
+        String senha = editarSenha.getText().toString();
+
+        if(res = isCampoVazio(nome)){
+            editarNome.requestFocus();
+        }else if(res = !isEmailVaido(email)){
+            editarEmail.requestFocus();
+        }else if(res = isCampoVazio(senha)){
+            editarSenha.requestFocus();
+        }
+
+        if(res){
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setTitle("Aviso");
+            dlg.setMessage("Há campo(s) inválido(s) ou em branco.");
+            dlg.setNeutralButton("OK", null);
+            dlg.show();
+        }
+
+        return  res;
+    }
+
+    private boolean isCampoVazio(String valor){
+
+        boolean resultado = (TextUtils.isEmpty(valor) || valor.trim().isEmpty());
+
+        return resultado;
+    }
+
+    private boolean isEmailVaido(String email){
+        boolean resultado = (!isCampoVazio(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+
+        return  resultado;
     }
 }

@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SelecaoActivity extends AppCompatActivity {
 
@@ -19,10 +23,16 @@ public class SelecaoActivity extends AppCompatActivity {
     private String idVoluntario;
     private SQLiteDatabase bancoDados;
     private Integer idVoluntarioInt;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auth = Conexao.getFirebaseAuth();
+        user = Conexao.getFirebaseUser();
+        //verificarUser();
+
         setContentView(R.layout.activity_selecao);
 
         adicionarProjeto = findViewById(R.id.idBtnAdicionarProjeto);
@@ -111,6 +121,16 @@ public class SelecaoActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void verificarUser() {
+
+        if(user == null){
+            finish();
+        }else{
+
+        }
 
     }
 }

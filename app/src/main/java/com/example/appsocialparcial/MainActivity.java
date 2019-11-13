@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class MainActivity extends Activity {
-
-
+    private FirebaseFirestore db;
+    //private DataBaseReference dataBaseReference;
     EditText email;
     EditText senha;
     Button cadastrarLogin;
@@ -22,6 +24,8 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db = FirebaseFirestore.getInstance();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -37,6 +41,8 @@ public class MainActivity extends Activity {
 
                 String emailDigitado = email.getText().toString();
                 String senhaDigitado = senha.getText().toString();
+
+               // Query doc = db.collection("voluntarios").whereEqualTo("email",emailDigitado.trim()).whereEqualTo("nome", senhaDigitado.trim());
 
                 Cursor cursor = bancoDados.rawQuery("SELECT * from voluntarios WHERE email = '" + emailDigitado + "' AND senha = '" + senhaDigitado +"'", null);
                 cursor.moveToFirst();

@@ -1,15 +1,18 @@
 package com.example.appsocialparcial;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class EditarProjetoSocialActivity extends AppCompatActivity {
 
@@ -64,17 +67,56 @@ public class EditarProjetoSocialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ContentValues values = new ContentValues();
-                values.put("nome", editarNome.getText().toString());
-                values.put("descricao", editarDescricao.getText().toString());
-                values.put("url", editarUrl.getText().toString());
-                String[] args = {idVoluntarioInt.toString()};
-                bancoDados.update("projetos", values, "voluntario_id=?", args);
-                Toast.makeText(getApplicationContext(), "Alteração realizada com sucesso!", Toast.LENGTH_LONG).show();
-                finish();
+                boolean isOk = validarCampos();
+
+                if(!isOk){
+                    ContentValues values = new ContentValues();
+                    values.put("nome", editarNome.getText().toString());
+                    values.put("descricao", editarDescricao.getText().toString());
+                    values.put("url", editarUrl.getText().toString());
+                    String[] args = {idVoluntarioInt.toString()};
+                    bancoDados.update("projetos", values, "voluntario_id=?", args);
+                    Toast.makeText(getApplicationContext(), "Alteração realizada com sucesso!", Toast.LENGTH_LONG).show();
+                    bancoDados.close();
+                    finish();
+                }
+
             }
         });
 
+    }
+
+    private boolean validarCampos(){
+
+        boolean res = false;
+        String nome = editarNome.getText().toString();
+        String descricao = editarDescricao.getText().toString();
+        String url = editarUrl.getText().toString();
+
+        if(res = isCampoVazio(nome)){
+            editarNome.requestFocus();
+        }else if(res = isCampoVazio(descricao)){
+            editarDescricao.requestFocus();
+        }else if(res = isCampoVazio(url)){
+            editarUrl.requestFocus();
+        }
+
+        if(res){
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setTitle("Aviso");
+            dlg.setMessage("Há campo(s) inválido(s) ou em branco.");
+            dlg.setNeutralButton("OK", null);
+            dlg.show();
+        }
+
+        return  res;
+    }
+
+    private boolean isCampoVazio(String valor){
+
+        boolean resultado = (TextUtils.isEmpty(valor) || valor.trim().isEmpty());
+
+        return resultado;
     }
 
 }
