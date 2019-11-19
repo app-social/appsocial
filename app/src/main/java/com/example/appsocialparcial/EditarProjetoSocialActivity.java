@@ -113,7 +113,7 @@ public class EditarProjetoSocialActivity extends AppCompatActivity {
                     String[] args = {idVoluntarioInt.toString()};
                     bancoDados.update("projetos", values, "voluntario_id=?", args);
                     Toast.makeText(getApplicationContext(), "Alteração realizada com sucesso!", Toast.LENGTH_LONG).show();
-                    Intent it = new Intent(EditarProjetoSocialActivity.this, ListarProjetoActivity.class);
+                    Intent it = new Intent(EditarProjetoSocialActivity.this, ListarProjetoActivity.class); 
                     startActivity(it);
                     bancoDados.close();
                     finish();
