@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +38,7 @@ public class ListarProjetoActivity extends Activity implements RecycleViewOnClic
 
         bancoDados = openOrCreateDatabase("cadastroVoluntariosProjetos", MODE_PRIVATE, null);
         bancoDados.execSQL("CREATE TABLE IF NOT EXISTS voluntarios(_idVoluntario INTEGER PRIMARY KEY AUTOINCREMENT,nome VARCHAR NOT NULL, email VARCHAR NOT NULL, senha VARCHAR NOT NULL)");
-        String  sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, url VARCHAR, voluntario_id INTERGER)";
+        String  sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, url VARCHAR, foto BLOB, voluntario_id INTERGER)";
 
        // String sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, " +
                // "nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, imagename BLOB NOT NULL, voluntario_id INTERGER)";
@@ -70,6 +74,10 @@ public class ListarProjetoActivity extends Activity implements RecycleViewOnClic
             while (cursor.moveToNext()){
                 Projeto projeto = new Projeto();
                 projeto.setUrlImage(cursor.getString(cursor.getColumnIndex("url")));
+                byte[]fotoBanco = cursor.getBlob(cursor.getColumnIndex("foto"));
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(fotoBanco);
+                Bitmap imageBitmap = BitmapFactory.decodeStream(imageStream);
+                projeto.setFotoBit(imageBitmap);
                 projeto.setNomeProjeto(cursor.getString(cursor.getColumnIndex("nome")));
                 projeto.setDescricaoProjeto(cursor.getString(cursor.getColumnIndex("descricao")));
                 projetos.add(projeto);
@@ -138,8 +146,19 @@ public class ListarProjetoActivity extends Activity implements RecycleViewOnClic
     @Override
     public void onClickListener(View view, Projeto projeto) {
 
+        // Classe nova: ProjetoBundle
+        // Em vez de Bitmap ter o byte[]
+        // Converter Projeto para ProjetoBundle (Bitmap -> byte[])
+        ProjetoBundle pb = new ProjetoBundle();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        projeto.getFotoBit().compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        pb.setDescricaoProjeto(projeto.getDescricaoProjeto());
+        pb.setNomeProjeto(projeto.getNomeProjeto());
+        pb.setFotoByte(byteArray);
+
         Bundle bundle = new Bundle();
-        bundle.putSerializable("projeto", projeto);
+        bundle.putSerializable("projeto", pb);
 
         Intent intent = new Intent(this, DetalharProjeto.class);
         intent.putExtras(bundle);

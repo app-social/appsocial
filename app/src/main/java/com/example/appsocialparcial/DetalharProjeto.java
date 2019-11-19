@@ -26,12 +26,13 @@ public class DetalharProjeto extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle dados = intent.getExtras();
-        Projeto projeto = (Projeto) dados.getSerializable("projeto");
+        //Projeto projeto = (Projeto) dados.getSerializable("projeto");
+        ProjetoBundle projeto = (ProjetoBundle) dados.getSerializable("projeto");
 
         tvNomeProjeto.setText(projeto.getNomeProjeto());
         tvDescricaoProjeto.setText(projeto.getDescricaoProjeto());
         //Faz com que a ImageView receba uma URL
-        Glide.with(this).load(projeto.getUrlImage()).into(tvUrlProjeto);
+        Glide.with(this).load(projeto.getFotoByte()).into(tvUrlProjeto);
 
 
     }

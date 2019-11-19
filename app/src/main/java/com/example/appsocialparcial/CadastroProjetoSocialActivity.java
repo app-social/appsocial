@@ -3,6 +3,7 @@ package com.example.appsocialparcial;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -68,7 +69,7 @@ public class CadastroProjetoSocialActivity extends AppCompatActivity {
         btnCancelar = findViewById(R.id.idBtnCancelarEditarVoluntario);
         nomeProjeto = findViewById(R.id.idNomeProjeto);
         descricaoProjeto = findViewById(R.id.tvDescricaoProjeto);
-        urlProjeto = findViewById(R.id.idProjetoURL);
+        //urlProjeto = findViewById(R.id.idProjetoURL);
 
         //Trabalhando a imagem
         btnSelecionarImagem = findViewById(R.id.btnSelecionarImagem);
@@ -88,7 +89,7 @@ public class CadastroProjetoSocialActivity extends AppCompatActivity {
         //query que funciona
         //String  sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, url VARCHAR, voluntario_id INTERGER)";
         String sql = "CREATE TABLE IF NOT EXISTS projetos(_idProjeto INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, url VARCHAR, voluntario_id INTERGER)";
+                "nome VARCHAR NOT NULL,descricao VARCHAR NOT NULL, url VARCHAR, foto BLOB , voluntario_id INTERGER)";
         bancoDados.execSQL(sql);
 
 
@@ -129,18 +130,44 @@ public class CadastroProjetoSocialActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String nomeDigitado = nomeProjeto.getText().toString();
                 String descricaoDigitada = descricaoProjeto.getText().toString();
-                String urlDigitada = urlProjeto.getText().toString();
+                //String urlDigitada = urlProjeto.getText().toString();
                 idVoluntarioInt = Integer.parseInt(idVoluntario);
                 int testeId = idVoluntarioInt;
+
+                //preparando a imagem para salvar
+//                imageViewProeto = findViewById(R.id.ivImagemProjeto);
+                //String[] filePath= { MediaStore.Images.Media.DATA};
+
+              //  BitmapDrawable drawable = (BitmapDrawable) imageViewProeto.getDrawable();
+                //Bitmap bitmap = drawable.getBitmap();
+
+//                Bitmap bitmap =   ((BitmapDrawable)imageViewProeto.getDrawable()).getBitmap();
+                //imageViewProeto.getDrawingCache();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                if(thumbnail != null){
+                    thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                }
+                //byte[] data = baos.toByteArray();
+                byte[] data = stream.toByteArray();
 
 
                 //inserir dados
                 boolean isOk = validarCampos();
 
                 if(!isOk){
-                    String query = "INSERT INTO  projetos (nome, descricao, url,voluntario_id ) VALUES ('"+ nomeDigitado +"','"+descricaoDigitada+ "','"+urlDigitada+"', " + testeId + ")";
+//                    String query = "INSERT INTO  projetos (nome, descricao, url, foto, voluntario_id ) " +
+//                            "VALUES ('"+ nomeDigitado +"','"+descricaoDigitada+ "','"+urlDigitada+"',  '"+data+ "' , " + testeId + ")";
 
-                    bancoDados.execSQL(query);
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("nome", nomeDigitado);
+                    cv.put("descricao", descricaoDigitada);
+                    //cv.put("url", urlDigitada);
+                    cv.put("foto", data);
+                    cv.put("voluntario_id", testeId);
+                    bancoDados.insert("projetos", null, cv);
+
+//                    bancoDados.execSQL(query);
                     Toast.makeText(getApplicationContext(), "Cadastro realizado com sucesso!", Toast.LENGTH_LONG).show();
                     Intent it = new Intent(CadastroProjetoSocialActivity.this, ListarProjetoActivity.class);
                     startActivity(it);
@@ -169,7 +196,7 @@ public class CadastroProjetoSocialActivity extends AppCompatActivity {
             int columnIndex= c.getColumnIndex(filePath[0]);
             String picturePath= c.getString(columnIndex);
             c.close();
-            Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+            thumbnail = (BitmapFactory.decodeFile(picturePath));
             imageViewProeto.setImageBitmap(thumbnail);
         }
     }
@@ -208,15 +235,16 @@ public class CadastroProjetoSocialActivity extends AppCompatActivity {
         boolean res = false;
         String nome = nomeProjeto.getText().toString();
         String descricao = descricaoProjeto.getText().toString();
-        String url = urlProjeto.getText().toString();
+       // String url = urlProjeto.getText().toString();
 
         if(res = isCampoVazio(nome)){
             nomeProjeto.requestFocus();
         }else if(res = isCampoVazio(descricao)){
             descricaoProjeto.requestFocus();
-        }else if(res = isCampoVazio(url)){
-            urlProjeto.requestFocus();
         }
+        //else if(res = isCampoVazio(url)){
+          //  urlProjeto.requestFocus();
+        //}
 
         if(res){
             AlertDialog.Builder dlg = new AlertDialog.Builder(this);

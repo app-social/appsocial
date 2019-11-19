@@ -1,23 +1,22 @@
 package com.example.appsocialparcial;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 
-public class Projeto implements Serializable {
+public class ProjetoBundle implements Serializable {
 
     private String urlImage;
     private String nomeProjeto;
     private String descricaoProjeto;
-    private Bitmap fotoBit;
+    private byte[] fotoByte;
 
 
-    public Bitmap getFotoBit() {
-        return fotoBit;
+
+    public byte[] getFotoByte() {
+        return fotoByte;
     }
 
-    public void setFotoBit(Bitmap fotoBit) {
-        this.fotoBit = fotoBit;
+    public void setFotoByte(byte[] fotoByte) {
+        this.fotoByte = fotoByte;
     }
 
     public String getUrlImage() {

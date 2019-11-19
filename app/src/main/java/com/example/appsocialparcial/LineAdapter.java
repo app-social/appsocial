@@ -1,12 +1,13 @@
 package com.example.appsocialparcial;
 
 import android.app.Activity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -34,7 +35,7 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineHolder> {
 
         Projeto projeto = mProjetos.get(position);
 
-        Glide.with(mActivity).load(projeto.getUrlImage()).into(holder.imgProjeto);
+        Glide.with(mActivity).load(projeto.getFotoBit()).into(holder.imgProjeto);
         holder.tvNomeProjeto.setText(projeto.getNomeProjeto());
 
         holder.projeto = projeto;
