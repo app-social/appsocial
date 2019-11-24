@@ -134,22 +134,22 @@
         android:id="@+id/imageViewFotoEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="176dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditarImagemProjeto"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditarDescricaoProjeto"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
     <Button
         android:id="@+id/btnEditarImagemProjeto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:text="SELECIONE A IMAGEM"
+        app:layout_constraintBottom_toTopOf="@+id/idBtnSalvarEditarProjeto"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditarDescricaoProjeto" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFotoEditar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

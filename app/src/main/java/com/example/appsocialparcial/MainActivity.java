@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Usuário não encontrado.", Toast.LENGTH_LONG).show();
                 }
 
-
+            finish();
 
             }
         });
@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent it = new Intent(MainActivity.this, CadastroVoluntarioActivity.class);
                 startActivity(it);
+                finish();
 
             }
         });

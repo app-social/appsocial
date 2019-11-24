@@ -31,6 +31,9 @@ public class DetalharProjeto extends AppCompatActivity {
 
         tvNomeProjeto.setText(projeto.getNomeProjeto());
         tvDescricaoProjeto.setText(projeto.getDescricaoProjeto());
+
+        tvUrlProjeto.getLayoutParams().width = 250;
+        tvUrlProjeto.getLayoutParams().height = 250;
         //Faz com que a ImageView receba uma URL
         Glide.with(this).load(projeto.getFotoByte()).into(tvUrlProjeto);
 
